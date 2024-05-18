@@ -3,7 +3,6 @@
 import logging
 import os
 import subprocess
-import sys
 from pathlib import Path
 
 from paperlessngx_postprocessor import Config, PaperlessAPI, Postprocessor
@@ -22,18 +21,18 @@ if __name__ == "__main__":
         post_consume_script = os.environ.get("PNGX_POSTPROCESSOR_POST_CONSUME_SCRIPT")
         if post_consume_script is not None:
             logging.basicConfig(format="[%(asctime)s] [%(levelname)s] [%(module)s] %(message)s")
-            
+
             config = Config(Config.general_options())
-            
+
             logging.getLogger().setLevel(config["verbose"])
-            
+
             script_env = os.environ.copy()
-            
+
             api = PaperlessAPI(config["paperless_api_url"],
                                auth_token = config["auth_token"],
                                paperless_src_dir = config["paperless_src_dir"],
-                               logger=logging.getLogger())    
-            
+                               logger=logging.getLogger())
+
             script_env.update(api.get_metadata_for_post_consume_script(document_id))
             for key in script_env:
                 if script_env[key] is None:
@@ -52,5 +51,3 @@ if __name__ == "__main__":
                             script_env["DOCUMENT_CORRESPONDENT"],
                             script_env["DOCUMENT_TAGS"]),
                            env=script_env)
-        
-

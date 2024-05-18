@@ -1,6 +1,6 @@
 import os
 import dateutil.parser
-from datetime import datetime, date
+from datetime import datetime
 from pathlib import Path
 
 class Config:
@@ -62,7 +62,7 @@ class Config:
                 "all": Config.OptionSpec(False, {"action": "store_true",
                                                  "help": "Select all documents. WARNING! If you have a lot of documents, this will take a long time."}),
         }
-    
+
     def general_options():
         return {"auth_token": Config.OptionSpec(None, {"metavar": "AUTH_TOKEN",
                                                        "type": str,
@@ -144,7 +144,7 @@ class Config:
             if os.environ.get("PNGX_POSTPROCESSOR_"+option_name.upper()) is not None and use_environment_variables:
                 self._options[option_name] = os.environ.get("PNGX_POSTPROCESSOR_"+option_name.upper())
         self._fix_options()
-        
+
     def _fix_options(self):
         if isinstance(self._options.get("dry_run"), str):
             if self._options["dry_run"].lower() in ["f", "false", "no"]:

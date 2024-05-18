@@ -12,7 +12,7 @@ if __name__ == "__main__":
     with open(os.environ["DOCUMENT_SOURCE_PATH"], "rb") as the_file:
         read_file = the_file.read()
         filename = "." + hashlib.sha256(read_file).hexdigest()
-    
+
     old_filename = None
     with open(filename, "r") as title_file:
         old_filename = title_file.read()
@@ -29,6 +29,5 @@ if __name__ == "__main__":
         document["tags"].append(tag_id)
         api.patch_document(os.environ["DOCUMENT_ID"], {"tags": document["tags"],
                                                        "created_date": document["created_date"]})
-    
-    os.remove(filename)
 
+    os.remove(filename)
